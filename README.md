@@ -186,7 +186,7 @@ In the refactored script, we create three output arrays to store total volume, s
 
 You can conclude that with the use of the arrays in the refactored script, it has improved the run time versus the original script.
 
-### Summary
+## Summary
 
 #### Advantages of refactoring code in general
 
