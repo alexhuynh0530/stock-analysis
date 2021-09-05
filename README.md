@@ -8,7 +8,7 @@ This analysis is to help Steve, a recent graduate with a finance degree. His par
 
 Steve has created an excel file containing the stock data and has asked us to help him analyze it. By using Excel and VBA, we automate the analysis using code and built-in macros to run scripts that finds the total daily volume and yearly return for each stock. The results will help Steve show his parents the performance of the green energy stocks and help them decide if DAQO is a good investment. 
 
-In this anlysis, we will use the results of our script to compare the stock performance between 2017 and 2018. In additon, we have refactored the original code and will analyze and compare the new refactored code versus the old code, as well as discuss the difference in execution times between the two.
+In this anlysis, we will use the results of our script to compare the stock performance between 2017 and 2018. In additon, we have refactored the original code and will analyze and compare the new refactored code versus the old code. We will also discuss the difference in execution times between the two.
 
 ## Results
 
@@ -57,8 +57,6 @@ From the screeshots above, you'll see that the refactored script runs much faste
 ### Overview of original script and the refactored script
 
 #### Original Script
-
-In the original script, we loop through the tickers and use a nested loop to loop through the rows of data. To calculate total volume for each ticker, we look at the first column to see if it matches a specific ticker and if it does then we add the volume and continue adding the volume for each row that ticker is a match. We also store the starting price data as a "Double" data type and look at the first column to see if it matches the specified ticker for that loop iteration while making sure the ticker before that row does not match. We also store the ending price as a "Double" data type and match the ticker while making sure the ticker after that row does not match. Before we loop through the next ticker iteration, we print out the data for ticker, total volume, and calculate the return by dividing the ending price by the starting price.
 
 ```
 '3) Prepare for the analysis of tickers.
@@ -121,9 +119,9 @@ In the original script, we loop through the tickers and use a nested loop to loo
     Next i
 ```
 
-#### Refactored Script 
+In the original script, we loop through the tickers and use a nested loop to loop through the rows of data. To calculate total volume for each ticker, we look at the 1st column to see if it matches a specific ticker and if it does then we add the volume in the 8th column for that row. We continue adding the volume for each row that ticker is a match. We also store the starting price data as a "Double" data type and look at the 1st column to see if it matches the specified ticker for that loop iteration while making sure the ticker before that row does not match. We also store the ending price as a "Double" data type and match the ticker while making sure the ticker after that row does not match. Before we loop through the next ticker iteration, we print out the data for ticker, total volume, and calculate the return by dividing the ending price by the starting price.
 
-In the refactored script, we create three output arrays to store total volume, starting price, and ending price. We use the tickerIndex to access the correct index across the ticker array and three different arrays. We create a for loops to initialize tickerVolumes to zero. We then create another loop to loop over all the rows while increasing the volume for the current ticker which is stored in the tickerVolumes array. We look for the starting price and ending price in the same way as the original code, however, we store the data in the tickerStartingPrices and tickerEndingPrices arrays. If the ending price is found then we increase the tickerIndex by 1. After all the data is stored in the arrays, we output the data using a for loop and referencing the arrays to print the ticker, total volume, and calculate the return by dividing the ending price by the starting price.
+#### Refactored Script 
 
     '1a) Create a ticker Index
     tickerIndex = 0
@@ -182,6 +180,8 @@ In the refactored script, we create three output arrays to store total volume, s
         
     Next i
     
+In the refactored script, we create three output arrays to store total volume, starting price, and ending price. We use the tickerIndex to access the correct index across the ticker array and three different arrays. We create a for loop to initialize tickerVolumes to zero. We then create another loop to loop over all the rows while increasing the volume for the current ticker which is stored in the tickerVolumes array. We look for the starting price and ending price in the same way as the original code, however, we store the data in the tickerStartingPrices and tickerEndingPrices arrays. If the ending price is found then we increase the tickerIndex by 1. After all the data is stored in the arrays, we output the data using a for loop and referencing the arrays to print the ticker, total volume, and calculate the return by dividing the ending price by the starting price.
+
 #### Conclusion
 
 You can conclude that with the use of the arrays in the refactored script, it has improved the run time versus the original script.
