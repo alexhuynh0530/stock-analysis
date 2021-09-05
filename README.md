@@ -12,8 +12,6 @@ In this anlysis, we will use the results of our script to compare the stock perf
 
 ## Results
 
-Using images and examples of your code, compare the stock performance between 2017 and 2018, as well as the execution times of the original script and the refactored script.
-
 ### Comparing the stock performance between 2017 and 2018
 
 #### 2017
@@ -24,7 +22,7 @@ Using images and examples of your code, compare the stock performance between 20
 
 ![VBA_Challenge_2018_results.png](https://github.com/alexhuynh0530/stock-analysis/blob/main/Resources/VBA_Challenge_2018_results.png)
 
-When comparing the performance of the green energy stocks shown above, we can see that 2017 had more **green** than 2018 (excuse the pun). You'll see that in 2017, DAQO outperformed the group of green energy stocks, returning 199.4% on the year. TERP was the only stock that had negative returns for 2017, although it was a loss of less than 10%.
+When comparing the performance of the green energy stocks shown above, we can see that 2017 had better returns across the board than 2018. You'll see that in 2017, DAQO outperformed the group of green energy stocks, returning 199.4% on the year. TERP was the only stock that had negative returns for 2017, although it was a loss of less than 10%.
 
 In 2018, only 2 stocks had a green year, ENPH and RUN, both returning more than 81% while the rest of the group, including DAQO New Energy Corp ($DQ), had negative returns. In addition, DAQO had the worst returns out of the whole list of green energy stocks in 2018 returning -62.6%. 
 
@@ -40,7 +38,149 @@ When looking at DQ stock, although it made the top 3 stocks with highest returns
 
 Please note, there are some limitations to this dataset as the data is only limited to 2017 and 2018. Global news, company specific news, and many other factors could have affected the performance of a stock in a particular year. Therefore, analyzing data with more years would improve the anlaysis.
 
-### Comparing the stock performance between 2017 and 2018
+### Comparing the execution times of the original script and the refactored script
+
+#### Origianl Script Run Times
+
+![VBA_Challenge_2017_oldcode.png](https://github.com/alexhuynh0530/stock-analysis/blob/main/Resources/VBA_Challenge_2017_oldcode.png)
+
+![VBA_Challenge_2018_oldcode.png](https://github.com/alexhuynh0530/stock-analysis/blob/main/Resources/VBA_Challenge_2018_oldcode.png)
+
+#### Refactored Script Run Times
+
+![VBA_Challenge_2017.png](https://github.com/alexhuynh0530/stock-analysis/blob/main/Resources/VBA_Challenge_2017.png)
+
+![VBA_Challenge_2018.png](https://github.com/alexhuynh0530/stock-analysis/blob/main/Resources/VBA_Challenge_2018.png)
+
+From the screeshots above, you'll see that the refactored script runs much faster versus the original script. 
+
+#### Original Script Code and Analysis
+
+In the original script, we loop through the tickers and use a nested loop to loop through rows of data. To calculate total volume for each ticker, we look at the first column to see if it matches a specific ticker and if it does then we add the volume. We also store the starting price data as a "Double" data type and look at the first column to see if it matches the specified ticker for that loop iteration while making sure the ticker before that row does not match. We also store the ending price as a "Double" data type and match the ticker while making sure the ticker after that row does not match. Before we loop through the next ticker iteration, we print out the data for ticker, total volume, and calculate the return by dividing the ending price by the starting price.
+
+```
+'3) Prepare for the analysis of tickers.
+'3a) Initialize variables for the starting price and ending price.
+    
+    Dim startingPrice As Double
+    Dim endingPrice As Double
+
+'3b) Activate the data worksheet.
+
+    Sheets(yearValue).Activate
+
+'3c) Find the number of rows to loop over.
+
+    RowCount = Cells(Rows.Count, "A").End(xlUp).Row
+
+'4) Loop through the tickers.
+
+    For i = 0 To 11
+    
+        ticker = tickers(i)
+        totalVolume = 0
+
+'5) Loop through rows in the data.
+
+        Sheets(yearValue).Activate
+        For j = 2 To RowCount
+
+'5a) Find the total volume for the current ticker.
+
+            If Cells(j, 1).Value = ticker Then
+                'increase totalVolume by the value in the current row
+                totalVolume = totalVolume + Cells(j, 8).Value
+            End If
+
+'5b) Find the starting price for the current ticker.
+
+            If Cells(j, 1).Value = ticker And Cells(j - 1, 1).Value <> ticker Then
+                'set starting price
+                startingPrice = Cells(j, 6).Value
+            End If
+
+
+'5c) Find the ending price for the current ticker.
+
+            If Cells(j, 1).Value = ticker And Cells(j + 1, 1).Value <> ticker Then
+                'set ending price
+                endingPrice = Cells(j, 6).Value
+            End If
+
+        Next j
+        
+'6) Output the data for the current ticker.
+
+    Worksheets("All Stocks Analysis").Activate
+    Cells(4 + i, 1).Value = ticker
+    Cells(4 + i, 2).Value = totalVolume
+    Cells(4 + i, 3).Value = endingPrice / startingPrice - 1
+
+    Next i
+```
+
+#### Refactored Script Code and Analysis
+
+In the refactored script, we create three output arrays to store total volume, starting price, and ending price. We use the tickerIndex to access the correct index across the ticker array and three different arrays. We create a for loops to initialize tickerVolumes to zero. We then create another loop to loop over all the rows while increasing the volume for the current ticker which is stored in the tickerVolumes array. We look for the starting price and ending price in the same way as the original code, however, we store the data in the tickerStartingPrices and tickerEndingPrices arrays. If the ending price is found then we increase the tickerIndex by 1. After all the data is stored in the arrays, we output the data using a for loop and referencing the arrays to print the ticker, total volume, and calculate the return by dividing the ending price by the starting price.
+
+'''
+    '1a) Create a ticker Index
+    tickerIndex = 0
+
+    '1b) Create three output arrays
+    Dim tickerVolumes(12) As Long
+    Dim tickerStartingPrices(12) As Single
+    Dim tickerEndingPrices(12) As Single
+    
+    ''2a) Create a for loop to initialize the tickerVolumes to zero.
+    For i = 0 To 11
+    tickerVolumes(i) = 0
+    Next i
+        
+        ''2b) Loop over all the rows in the spreadsheet.
+        For i = 2 To RowCount
+        
+            '3a) Increase volume for current ticker
+            tickerVolumes(tickerIndex) = tickerVolumes(tickerIndex) + Cells(i, 8).Value
+            
+            '3b) Check if the current row is the first row with the selected tickerIndex.
+            'If  Then
+            If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i - 1, 1).Value <> tickers(tickerIndex) Then
+            
+                'set starting price
+                tickerStartingPrices(tickerIndex) = Cells(i, 6).Value
+                
+            'End If
+            End If
+
+            '3c) check if the current row is the last row with the selected ticker
+            'If the next row’s ticker doesn’t match, increase the tickerIndex.
+            'If  Then
+            If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i + 1, 1).Value <> tickers(tickerIndex) Then
+            
+                'set ending price
+                tickerEndingPrices(tickerIndex) = Cells(i, 6).Value
+                
+                '3d Increase the tickerIndex.
+                tickerIndex = tickerIndex + 1
+                
+            'End If
+            End If
+        
+        Next i
+
+    'Next tickerIndex
+
+    '4) Loop through your arrays to output the Ticker, Total Daily Volume, and Return.
+    For i = 0 To 11
+        
+        Worksheets("All Stocks Analysis").Activate
+        Cells(4 + i, 1).Value = tickers(i)
+        Cells(4 + i, 2).Value = tickerVolumes(i)
+        Cells(4 + i, 3).Value = tickerEndingPrices(i) / tickerStartingPrices(i) - 1
+        
+    Next i
+'''
 
 ### Summary
 
