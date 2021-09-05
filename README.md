@@ -1,4 +1,4 @@
-# An Analysis of Green Energy Stocks
+# An Analysis of Green Energy Stocks using Excel and VBA
 
 ## Overview of Project
 
@@ -6,15 +6,21 @@
 
 This analysis is to help Steve, a recent graduate with a finance degree. His parents are passionate about green energy and have decided to invest all their money into DAQO New Energy Corp ($DQ) without doing much research. Steve has promised to look into DAQO stock for his parents but is concerned about diversifying their funds, so he wants to analyze a handful of green energy stocks in addition to DAQO's stock.
 
-Steve has created an excel file containing the stock data and has asked us to help him analyze it. By using Excel and VBA, we automate the analysis using code and built in macros to run scripts that finds the total daily volume and yearly return for each stock.  
+Steve has created an excel file containing the stock data and has asked us to help him analyze it. By using Excel and VBA, we automate the analysis using code and built in macros to run scripts that finds the total daily volume and yearly return for each stock. The results will help Steve show his parents the performance of the green energy stocks and help them decide if DAQO is a good investment. 
 
-Louise, who wants to start a crowdfunding campaign to help fund her play - Fever. She's estimating a budget of over $10,000. By using Excel, we analyze crowdfunding data to determine whether there are specific factors to make a project's campaign successful. We take a look at the crowdfunding outcomes based on launch dates as well as the outcomes based on the fundraising goals set for the campaigns. These insights are used to help Louise gain a greater understanding of past crowdfunding campaigns so that she can mirror other succcessful campaigns in her category.
+Furthermore, we have refactored the code and will analyze and compare the new refactored code versus the old code, as well as discuss the difference in execution times between the two.
 
+## Results
 
+Using images and examples of your code, compare the stock performance between 2017 and 2018, as well as the execution times of the original script and the refactored script.
+
+### Comparing the stock performance between 2017 and 2018
 
 ![Theater_Outcomes_vs_Launch.png](https://github.com/alexhuynh0530/kickstarter-analysis/blob/main/resources/Theater_Outcomes_vs_Launch.png)
 
-## Results
+When comparing the performance of the green energy stocks given, we saw more **green** in 2017 versus 2018 (excuse the pun). You'll see that in 2017, DAQO outperformed the group of green energy stocks, returning 199.4% on the year. TERP was the only stock that had negative returns for 2017, although it was a loss of less than 10%.
+
+In 2018, only 2 stocks had a green year, ENPH and RUN, both returning more than 81% while the rest of the group, including DAQO New Energy Corp ($DQ), had negative returns. In addition, DAQO had the worst returns out of the whole list of green energy stocks in 2018 returning -62.6%. 
 
 ### Conclusions made about the Analysis of Outcomes Based on Launch Date
 
