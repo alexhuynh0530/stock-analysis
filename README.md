@@ -54,7 +54,9 @@ Please note, there are some limitations to this dataset as the data is only limi
 
 From the screeshots above, you'll see that the refactored script runs much faster versus the original script. 
 
-#### Original Script Code and Analysis
+### Overview of original script and the refactored script
+
+#### Original Script
 
 In the original script, we loop through the tickers and use a nested loop to loop through the rows of data. To calculate total volume for each ticker, we look at the first column to see if it matches a specific ticker and if it does then we add the volume and continue adding the volume for each row that ticker is a match. We also store the starting price data as a "Double" data type and look at the first column to see if it matches the specified ticker for that loop iteration while making sure the ticker before that row does not match. We also store the ending price as a "Double" data type and match the ticker while making sure the ticker after that row does not match. Before we loop through the next ticker iteration, we print out the data for ticker, total volume, and calculate the return by dividing the ending price by the starting price.
 
@@ -119,7 +121,7 @@ In the original script, we loop through the tickers and use a nested loop to loo
     Next i
 ```
 
-#### Refactored Script Code and Analysis
+#### Refactored Script 
 
 In the refactored script, we create three output arrays to store total volume, starting price, and ending price. We use the tickerIndex to access the correct index across the ticker array and three different arrays. We create a for loops to initialize tickerVolumes to zero. We then create another loop to loop over all the rows while increasing the volume for the current ticker which is stored in the tickerVolumes array. We look for the starting price and ending price in the same way as the original code, however, we store the data in the tickerStartingPrices and tickerEndingPrices arrays. If the ending price is found then we increase the tickerIndex by 1. After all the data is stored in the arrays, we output the data using a for loop and referencing the arrays to print the ticker, total volume, and calculate the return by dividing the ending price by the starting price.
 
@@ -179,12 +181,36 @@ In the refactored script, we create three output arrays to store total volume, s
         Cells(4 + i, 3).Value = tickerEndingPrices(i) / tickerStartingPrices(i) - 1
         
     Next i
+    
+#### Conclusion
+
+You can conclude that with the use of the arrays in the refactored script, it has improved the run time versus the original script.
 
 ### Summary
 
-There are some limitations to this dataset that include:
+#### Advantages of refactoring code in general
 
-- Data limited to only 2010-2017, fresher data could help with more recent years
-- Lack of data about the form of marketing and promotion used in executing the campaign fundraising (i.e. email marketing, social media, etc.)
+- More efficient
+- Faster run times
+- Less memory
+- Improving logic and makes it easier for future users to read
 
-Another graph we could create could be another line graph of Theater Outcomes by Launch Date using percentages. As noted in the Analysis of Outcomes by Launch Date, the most successful campaigns launched in May. However, May also had the most failed campaigns by quantity. If we used percentages, we would see that May had the highest percentage of successful campaigns (67%) followed by June (65%), and December had the highest percentage failed (47%) followed by October (43%). To enhance this chart even further we could filter on goals with about $10,000 since Louise is budgeting over $10,000 for her campaign.
+#### Disadvantages of refactoring code in general
+
+- Introducing new bugs
+
+#### Advantages of the original VBA script
+
+- The code works even if the tickers were not in alphabetical order
+
+#### Disadvantages of the original VBA script
+
+- Slower run time
+
+#### Advantages of the refactored VBA script
+
+- Faster run time
+
+#### Disadvantages of the refactored VBA script
+
+- If tickers were not in alphabetical order the code does not work
