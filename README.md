@@ -168,8 +168,6 @@ In the original script, we loop through the tickers and use a nested loop to loo
         
     Next i
 
-    'Next tickerIndex
-
     '4) Loop through your arrays to output the Ticker, Total Daily Volume, and Return.
     For i = 0 To 11
         
