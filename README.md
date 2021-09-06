@@ -136,39 +136,37 @@ In the original script, we loop through the tickers and use a nested loop to loo
     tickerVolumes(i) = 0
     Next i
         
-        ''2b) Loop over all the rows in the spreadsheet.
-        For i = 2 To RowCount
+    ''2b) Loop over all the rows in the spreadsheet.
+    For i = 2 To RowCount
         
-            '3a) Increase volume for current ticker
-            tickerVolumes(tickerIndex) = tickerVolumes(tickerIndex) + Cells(i, 8).Value
+        '3a) Increase volume for current ticker
+        tickerVolumes(tickerIndex) = tickerVolumes(tickerIndex) + Cells(i, 8).Value
             
-            '3b) Check if the current row is the first row with the selected tickerIndex.
-            'If  Then
-            If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i - 1, 1).Value <> tickers(tickerIndex) Then
+        '3b) Check if the current row is the first row with the selected tickerIndex.
+        'If  Then
+        If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i - 1, 1).Value <> tickers(tickerIndex) Then
             
-                'set starting price
-                tickerStartingPrices(tickerIndex) = Cells(i, 6).Value
+            'set starting price
+            tickerStartingPrices(tickerIndex) = Cells(i, 6).Value
                 
-            'End If
-            End If
+        'End If
+        End If
 
-            '3c) check if the current row is the last row with the selected ticker
-            'If the next row’s ticker doesn’t match, increase the tickerIndex.
-            'If  Then
-            If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i + 1, 1).Value <> tickers(tickerIndex) Then
+        '3c) check if the current row is the last row with the selected ticker
+        'If the next row’s ticker doesn’t match, increase the tickerIndex.
+        'If  Then
+        If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i + 1, 1).Value <> tickers(tickerIndex) Then
             
-                'set ending price
-                tickerEndingPrices(tickerIndex) = Cells(i, 6).Value
+            'set ending price
+            tickerEndingPrices(tickerIndex) = Cells(i, 6).Value
                 
-                '3d Increase the tickerIndex.
-                tickerIndex = tickerIndex + 1
+            '3d Increase the tickerIndex.
+            tickerIndex = tickerIndex + 1
                 
-            'End If
-            End If
+        'End If
+        End If
         
-        Next i
-
-    'Next tickerIndex
+    Next i
 
     '4) Loop through your arrays to output the Ticker, Total Daily Volume, and Return.
     For i = 0 To 11
